@@ -1,5 +1,5 @@
 import {
-    AddCounter, AutomaticIncreaseCounterValue,
+    AddCounter, AutomaticIncreaseCounterValue, CountersActions,
     DecreaseCounterValue,
     DeleteCounter,
     ICounter,
@@ -20,17 +20,11 @@ interface IState {
 }
 
 const initialState: IState = {
-    countersList: [
-        // {
-        //     counterId: "0",
-        //     currentValue: 0,
-        //     automaticIncrementFlag: false
-        // }
-    ],
+    countersList: [],
     totalUniqCountersCount: 0
 };
 
-export const countersReducer = (state = initialState, action: any): IState => {
+export const countersReducer = (state = initialState, action: CountersActions): IState => {
     switch (action.type) {
         case ADD_COUNTER: {
             const currentUniqCountersCount = state.totalUniqCountersCount + 1;
@@ -107,12 +101,8 @@ export const getCountersList = (state: AppState): ICounter[] => {
     return state.countersPage.countersList
 }
 
-// export const getCounterId = (state: AppState): string => {
-//     return state.countersPage.countersList.
+// export const getCurrentValuesSum = (state: AppState): number => {
+//     return state.countersPage.countersList.reduce(function (sum: number, item: ICounter) {
+//         return sum + item.currentValue
+//     }, 0)
 // }
-
-export const getCurrentValuesSum = (state: AppState): number => {
-    return state.countersPage.countersList.reduce(function (sum: number, item: ICounter) {
-        return sum + item.currentValue
-    }, 0)
-}

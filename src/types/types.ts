@@ -38,3 +38,10 @@ export interface DecreaseCounterValue{
 export interface AutomaticIncreaseCounterValue{
     type: typeof AUTOMATIC_INCREASE_VALUE,
 }
+
+export type CountersActions =
+    | AddCounter
+    | DeleteCounter
+    | IncreaseCounterValue
+    | DecreaseCounterValue
+    | AutomaticIncreaseCounterValue

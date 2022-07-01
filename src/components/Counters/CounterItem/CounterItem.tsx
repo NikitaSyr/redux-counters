@@ -1,6 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useDispatch} from "react-redux";
 import {actions} from "../../../redux/countersReducer";
+import {Button, Card} from "antd";
+import s from "./CounterItem.module.css"
 
 type PropsType = {
     currentValue: number
@@ -10,8 +12,6 @@ type PropsType = {
 
 export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, automaticIncrementFlag}) => {
     const dispatch = useDispatch();
-
-
 
     const increaseCounterValue = () => {
         dispatch(actions.increaseCounterValueAC(counterId));
@@ -24,13 +24,33 @@ export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, autom
     const deleteCounter = () => {
         dispatch(actions.deleteCounterAC(counterId));
     };
+    if (!currentValue) {
+        currentValue = 0
+    }
 
     return (
-        <>
-            {!automaticIncrementFlag && <button onClick={increaseCounterValue}>+</button>}
-            {!automaticIncrementFlag && <button onClick={decreaseCounterValue}>-</button>}
-            <button onClick={deleteCounter}>Del</button>
-            {currentValue}
-        </>
+        <Card
+            className={s.counterItem}
+            size="small"
+        >
+            <p className={s.counterValue}>{currentValue}</p>
+            {!automaticIncrementFlag &&
+                <Button onClick={increaseCounterValue}
+                        className={s.counterButton}
+                >
+                    +
+                </Button>}
+            {!automaticIncrementFlag &&
+                <Button onClick={decreaseCounterValue}
+                        className={s.counterButton}
+                >
+                    -
+                </Button>}
+            <Button onClick={deleteCounter}
+                    className={s.counterButton}
+            >
+                Delete
+            </Button>
+        </Card>
     )
 }

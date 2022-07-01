@@ -1,17 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
-import {actions, getCountersList, getCurrentValuesSum} from "../../redux/countersReducer";
+import {actions, getCountersList} from "../../redux/countersReducer";
 import {CounterItem} from "./CounterItem/CounterItem";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import {Button} from "antd";
+import s from "./Counters.module.css"
 
 export const Counters = () => {
     const [touched, setTouched] = useState(false)
     const dispatch = useDispatch();
     const countersList = useSelector(getCountersList);
-    const sum = useSelector(getCurrentValuesSum);
-
-    // useEffect(() => {
-    //     dispatch(actions.automaticIncreaseCounterValueAC())
-    // })
+    // const sum = useSelector(getCurrentValuesSum);
 
     const addCounter = () => {
         dispatch(actions.addCounterAC());
@@ -28,14 +26,20 @@ export const Counters = () => {
     ));
 
     return (
-        <div onClick={automaticCounter}>
-            <button onClick={addCounter}>Жмак</button>
-            <div>
+        <div onClick={automaticCounter}
+             className={s.counters}
+        >
+            <Button onClick={addCounter}
+            className={s.countersButton}
+            >
+                Add counter
+            </Button>
+            <div className={s.countersList}>
                 {countersItemsList}
             </div>
-            <div>
-                {sum}
-            </div>
+            {/*<div>*/}
+            {/*    {sum}*/}
+            {/*</div>*/}
         </div>
     )
 }

@@ -3,7 +3,6 @@ import createSagaMiddleware from "redux-saga";
 import {countersReducer} from "./countersReducer";
 import rootSaga from "./sagas";
 
-
 const rootReducer = combineReducers({
     countersPage: countersReducer
 });
