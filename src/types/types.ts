@@ -1,5 +1,6 @@
 import {
-    ADD_COUNTER, AUTOMATIC_INCREASE_VALUE_BY_COUNTER_ID,
+    ADD_COUNTER,
+    AUTOMATIC_INCREASE_VALUE,
     DECREASE_VALUE_BY_COUNTER_ID,
     DELETE_COUNTER,
     INCREASE_VALUE_BY_COUNTER_ID
@@ -35,6 +36,5 @@ export interface DecreaseCounterValue{
 }
 
 export interface AutomaticIncreaseCounterValue{
-    type: typeof AUTOMATIC_INCREASE_VALUE_BY_COUNTER_ID,
-    payload: CounterIdPayload
+    type: typeof AUTOMATIC_INCREASE_VALUE,
 }
