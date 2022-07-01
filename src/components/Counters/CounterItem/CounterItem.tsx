@@ -5,9 +5,10 @@ import {actions} from "../../../redux/countersReducer";
 type PropsType = {
     currentValue: number
     counterId: string
+    isFourth: boolean
 }
 
-export const CounterItem: React.FC<PropsType> = ({currentValue, counterId}) => {
+export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, isFourth}) => {
     const dispatch = useDispatch();
 
     const increaseCounterValue = () => {
@@ -19,14 +20,14 @@ export const CounterItem: React.FC<PropsType> = ({currentValue, counterId}) => {
     };
 
     const deleteCounter = () => {
-        dispatch(actions.deleteCounterAC(counterId))
-    }
+        dispatch(actions.deleteCounterAC(counterId));
+    };
 
 
     return (
         <>
-            <button onClick={increaseCounterValue}>+</button>
-            <button onClick={decreaseCounterValue}>-</button>
+            {!isFourth && <button onClick={increaseCounterValue}>+</button>}
+            {!isFourth && <button onClick={decreaseCounterValue}>-</button>}
             <button onClick={deleteCounter}>Del</button>
             {currentValue}
         </>

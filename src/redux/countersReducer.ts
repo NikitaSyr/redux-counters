@@ -19,16 +19,22 @@ const initialState: IState = {
 export const countersReducer = (state = initialState, action: any): IState => {
     switch (action.type) {
         case ADD_COUNTER: {
+            const currentUniqCountersCount = state.totalUniqCountersCount + 1;
             const valuesSum = state.countersList.reduce(function(sum: number, item: ICounter) {
                 return sum + item.currentValue
             }, 0)
+            let isFourthFlag = false
+            if (currentUniqCountersCount % 4 === 0 && currentUniqCountersCount !== 0) {
+                isFourthFlag = true
+            }
             const newCounter = {
                 counterId: (state.totalUniqCountersCount + 1).toString(),
-                currentValue: valuesSum
+                currentValue: valuesSum,
+                isFourth: isFourthFlag
             }
             return {
                 ...state,
-                totalUniqCountersCount: state.totalUniqCountersCount + 1,
+                totalUniqCountersCount: currentUniqCountersCount,
                 countersList: [...state.countersList, newCounter]
             }
         }
@@ -85,8 +91,7 @@ export const getCountersList = (state: AppState): ICounter[] => {
 }
 
 export const getCurrentValuesSum = (state: AppState): number => {
-    const valuesSum = state.countersPage.countersList.reduce(function(sum: number, item: ICounter) {
+    return state.countersPage.countersList.reduce(function (sum: number, item: ICounter) {
         return sum + item.currentValue
     }, 0)
-    return valuesSum
 }

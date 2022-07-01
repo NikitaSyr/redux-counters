@@ -3,19 +3,18 @@ import {actions, getCountersList, getCurrentValuesSum} from "../../redux/counter
 import {CounterItem} from "./CounterItem/CounterItem";
 
 export const Counters = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const countersList = useSelector(getCountersList);
-    const sum = useSelector(getCurrentValuesSum)
+    const sum = useSelector(getCurrentValuesSum);
     // console.log(countersList)
 
     const addCounter = () => {
-        dispatch(actions.addCounterAC())
-    }
-
+        dispatch(actions.addCounterAC());
+    };
 
 
     const countersItemsList = countersList.map(item => (
-        <CounterItem key={item.counterId} currentValue={item.currentValue} counterId={item.counterId}/>
+        <CounterItem key={item.counterId} currentValue={item.currentValue} counterId={item.counterId} isFourth={item.isFourth}/>
     ));
 
     return (
