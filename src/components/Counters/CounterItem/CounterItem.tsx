@@ -1,15 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {actions} from "../../../redux/countersReducer";
 
 type PropsType = {
     currentValue: number
     counterId: string
-    isFourth: boolean
+    automaticIncrementFlag: boolean
 }
 
-export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, isFourth}) => {
+export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, automaticIncrementFlag}) => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actions.automaticIncreaseCounterValueAC(counterId))
+    })
 
     const increaseCounterValue = () => {
         dispatch(actions.increaseCounterValueAC(counterId));
@@ -23,12 +27,16 @@ export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, isFou
         dispatch(actions.deleteCounterAC(counterId));
     };
 
+    // const fur = () => {
+    //     dispatch(actions.automaticIncreaseCounterValueAC(counterId))
+    // }
 
     return (
         <>
-            {!isFourth && <button onClick={increaseCounterValue}>+</button>}
-            {!isFourth && <button onClick={decreaseCounterValue}>-</button>}
+            {!automaticIncrementFlag && <button onClick={increaseCounterValue}>+</button>}
+            {!automaticIncrementFlag && <button onClick={decreaseCounterValue}>-</button>}
             <button onClick={deleteCounter}>Del</button>
+            {/*<button onClick={fur}>Fur</button>*/}
             {currentValue}
         </>
     )

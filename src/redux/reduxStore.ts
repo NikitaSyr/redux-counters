@@ -1,8 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import createSagaMiddleware from "redux-saga";
 import {countersReducer} from "./countersReducer";
-// import {booksSearchReducer} from "./booksSearchReducer";
-// import rootSaga from "./sagas";
+import rootSaga from "./sagas";
 
 
 const rootReducer = combineReducers({
@@ -12,11 +11,10 @@ const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
-// const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
-// const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
-const store = createStore(rootReducer, undefined);
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 export default store;

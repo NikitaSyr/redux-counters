@@ -1,10 +1,18 @@
-import {ICounter} from "../types/types";
+import {
+    AddCounter, AutomaticIncreaseCounterValue,
+    DecreaseCounterValue,
+    DeleteCounter,
+    ICounter,
+    IncreaseCounterValue
+} from "../types/types";
 import {AppState} from "./reduxStore";
+import {AUTOMATIC_COUNTER_VALUE} from "../constants/constants";
 
-const ADD_COUNTER = "redux-counters/counters/ADD_COUNTER";
-const DELETE_COUNTER = "redux-counters/counters/DELETE_COUNTER";
-const INCREASE_VALUE_BY_COUNTER_ID = "redux-counters/counters/INCREASE_VALUE_BY_COUNTER_ID";
-const DECREASE_VALUE_BY_COUNTER_ID = "redux-counters/counters/DECREASE_VALUE_BY_COUNTER_ID";
+export const ADD_COUNTER = "redux-counters/counters/ADD_COUNTER";
+export const DELETE_COUNTER = "redux-counters/counters/DELETE_COUNTER";
+export const INCREASE_VALUE_BY_COUNTER_ID = "redux-counters/counters/INCREASE_VALUE_BY_COUNTER_ID";
+export const DECREASE_VALUE_BY_COUNTER_ID = "redux-counters/counters/DECREASE_VALUE_BY_COUNTER_ID";
+export const AUTOMATIC_INCREASE_VALUE_BY_COUNTER_ID = "redux-counters/counters/AUTOMATIC_INCREASE_VALUE_BY_COUNTER_ID";
 
 interface IState {
     countersList: ICounter[],
@@ -23,14 +31,14 @@ export const countersReducer = (state = initialState, action: any): IState => {
             const valuesSum = state.countersList.reduce(function(sum: number, item: ICounter) {
                 return sum + item.currentValue
             }, 0)
-            let isFourthFlag = false
-            if (currentUniqCountersCount % 4 === 0 && currentUniqCountersCount !== 0) {
-                isFourthFlag = true
+            let isAutomaticIncrementFlag = false
+            if (currentUniqCountersCount % AUTOMATIC_COUNTER_VALUE === 0 && currentUniqCountersCount !== 0) {
+                isAutomaticIncrementFlag = true
             }
             const newCounter = {
                 counterId: (state.totalUniqCountersCount + 1).toString(),
                 currentValue: valuesSum,
-                isFourth: isFourthFlag
+                automaticIncrementFlag: isAutomaticIncrementFlag
             }
             return {
                 ...state,
@@ -69,19 +77,23 @@ export const countersReducer = (state = initialState, action: any): IState => {
 };
 
 export const actions = {
-    addCounterAC: (): any => ({
+    addCounterAC: (): AddCounter => ({
         type: ADD_COUNTER,
     }),
-    deleteCounterAC: (counterId: string): any => ({
+    deleteCounterAC: (counterId: string): DeleteCounter => ({
         type: DELETE_COUNTER,
         payload: {counterId}
     }),
-    increaseCounterValueAC: (counterId: string): any => ({
+    increaseCounterValueAC: (counterId: string): IncreaseCounterValue => ({
         type: INCREASE_VALUE_BY_COUNTER_ID,
         payload: {counterId}
     }),
-    decreaseCounterValueAC: (counterId: string): any => ({
+    decreaseCounterValueAC: (counterId: string): DecreaseCounterValue => ({
         type: DECREASE_VALUE_BY_COUNTER_ID,
+        payload: {counterId}
+    }),
+    automaticIncreaseCounterValueAC: (counterId: string): AutomaticIncreaseCounterValue => ({
+        type: AUTOMATIC_INCREASE_VALUE_BY_COUNTER_ID,
         payload: {counterId}
     })
 };
@@ -89,6 +101,10 @@ export const actions = {
 export const getCountersList = (state: AppState): ICounter[] => {
     return state.countersPage.countersList
 }
+
+// export const getCounterId = (state: AppState): string => {
+//     return state.countersPage.countersList.
+// }
 
 export const getCurrentValuesSum = (state: AppState): number => {
     return state.countersPage.countersList.reduce(function (sum: number, item: ICounter) {
