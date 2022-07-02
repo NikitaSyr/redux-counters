@@ -100,9 +100,3 @@ export const actions = {
 export const getCountersList = (state: AppState): ICounter[] => {
     return state.countersPage.countersList
 }
-
-// export const getCurrentValuesSum = (state: AppState): number => {
-//     return state.countersPage.countersList.reduce(function (sum: number, item: ICounter) {
-//         return sum + item.currentValue
-//     }, 0)
-// }
