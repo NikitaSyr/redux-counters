@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {actions, getCountersList} from "../../redux/countersReducer";
-import {CounterItem} from "./CounterItem/CounterItem";
+import CounterItem from "./CounterItem/CounterItem";
 import {Button} from "antd";
 import s from "./Counters.module.css"
+import {useState} from "react";
 
 export const Counters = () => {
+    const [touched, setTouched] = useState(false)
     const dispatch = useDispatch();
     const countersList = useSelector(getCountersList);
 
@@ -12,11 +14,17 @@ export const Counters = () => {
         dispatch(actions.addCounterAC());
     };
     const automaticCounter = () => {
+            if (!touched) {
             dispatch(actions.automaticIncreaseCounterValueAC())
+        }
+        setTouched(true)
     }
 
     const countersItemsList = countersList.map(item => (
-        <CounterItem key={item.counterId} currentValue={item.currentValue} counterId={item.counterId} automaticIncrementFlag={item.automaticIncrementFlag}/>
+        <CounterItem key={item.counterId}
+                     currentValue={item.currentValue}
+                     counterId={item.counterId}
+                     automaticIncrementFlag={item.automaticIncrementFlag}/>
     ));
 
     return (

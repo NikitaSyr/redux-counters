@@ -4,13 +4,13 @@ import {actions} from "../../../redux/countersReducer";
 import {Button, Card} from "antd";
 import s from "./CounterItem.module.css"
 
-type PropsType = {
+interface IProps {
     currentValue: number
     counterId: string
     automaticIncrementFlag: boolean
 }
 
-export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, automaticIncrementFlag}) => {
+const CounterItem: React.FC<IProps> = ({currentValue, counterId, automaticIncrementFlag}) => {
     const dispatch = useDispatch();
 
     const increaseCounterValue = () => {
@@ -54,3 +54,5 @@ export const CounterItem: React.FC<PropsType> = ({currentValue, counterId, autom
         </Card>
     )
 }
+
+export default React.memo(CounterItem)
